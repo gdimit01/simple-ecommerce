@@ -18,22 +18,24 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import greyCapImage from "../assets/grey-cap.jpeg";
+import blueCapImage from "../assets/pixel art cap1.jpeg";
 import { CartItem, Product, SalesData } from "../types/index"; // Adjust the import path as necessary
 
 const products: Product[] = [
   {
     id: 1,
-    name: "White Cap",
+    name: "Blue Cap",
     price: 20,
-    image: "/api/placeholder/300/200",
+    image: blueCapImage,
     description:
-      "A stylish white cap perfect for sunny days. Made with breathable material for maximum comfort.",
+      "A stylish blue cap perfect for sunny days. Made with breathable material for maximum comfort.",
   },
   {
     id: 2,
     name: "Grey Cap",
     price: 20,
-    image: "/api/placeholder/300/200",
+    image: greyCapImage,
     description:
       "Classic grey cap with adjustable strap. Suitable for casual wear or sports activities.",
   },
