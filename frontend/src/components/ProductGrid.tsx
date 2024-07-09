@@ -10,7 +10,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   products,
   setSelectedProduct,
 }) => (
-  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  // Added px-4 for horizontal padding on mobile
+  // sm:px-0 removes the padding for screens larger than the 'sm' breakpoint
+  <div className="grid grid-cols-1 gap-6 px-4 sm:px-0 sm:grid-cols-2 md:grid-cols-3">
     {products.map((product) => (
       <div
         key={product.id}
@@ -21,7 +23,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           alt={product.name}
           className="object-cover w-full h-48"
         />
-        <div className="p-4">
+        {/* Added more padding to the content area for better spacing on mobile */}
+        <div className="p-5">
           <h3 className="mb-2 text-lg font-light">{product.name}</h3>
           <p className="h-20 mb-4 overflow-hidden text-gray-600">
             {product.description}
