@@ -1,17 +1,24 @@
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, X } from "lucide-react";
 import React from "react";
 
 interface AlertProps {
   show: boolean;
   message: string;
+  onClose: () => void;
 }
 
-const Alert: React.FC<AlertProps> = ({ show, message }) => {
+const Alert: React.FC<AlertProps> = ({ show, message, onClose }) => {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
-      <div className="p-5 bg-white border rounded-md shadow-lg w-96">
+    <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
+      <div className="relative p-5 bg-white border rounded-md shadow-lg w-96">
+        <button
+          onClick={onClose}
+          className="absolute text-gray-500 top-2 right-2 hover:text-gray-700"
+        >
+          <X size={20} />
+        </button>
         <div className="text-center">
           <div className="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
             <CheckCircle className="w-6 h-6 text-green-600" />

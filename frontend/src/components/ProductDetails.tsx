@@ -1,3 +1,5 @@
+// src/components/ProductDetails.tsx
+
 import { Minus, Plus, X } from "lucide-react";
 import React, { useState } from "react";
 import { Product } from "../types";
@@ -15,48 +17,54 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
 
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-xl">
-        <div className="flex justify-end mb-4">
+      <div className="w-full max-w-3xl overflow-hidden bg-white rounded-lg shadow-xl">
+        <div className="relative">
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-pink-500"
+            className="absolute text-gray-600 top-4 right-4 hover:text-pink-500"
           >
             <X size={24} />
           </button>
         </div>
         <div className="flex flex-col md:flex-row">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="object-cover w-full mb-4 rounded-lg md:w-1/2 md:mb-0 md:mr-6"
-          />
           <div className="md:w-1/2">
-            <h2 className="mb-4 text-3xl font-light">{product.name}</h2>
+            <img
+              src={product.image}
+              alt={product.name}
+              className="object-cover w-full h-64 md:h-full"
+            />
+          </div>
+          <div className="p-6 md:w-1/2">
+            <h2 className="mb-4 text-2xl font-light">{product.name}</h2>
             <p className="mb-4 text-gray-600">{product.description}</p>
             <p className="mb-6 text-2xl font-bold">£{product.price}</p>
-            <div className="flex items-center mb-6 space-x-4">
+            <div className="flex items-center mb-6">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="px-4 py-2 font-light text-pink-800 bg-pink-200 rounded-l hover:bg-pink-300"
+                className="px-3 py-1 text-pink-800 bg-pink-200 rounded-l"
               >
                 <Minus size={20} />
               </button>
-              <span className="text-xl">{quantity}</span>
+              <span className="px-4 py-1 text-pink-800 bg-pink-100">
+                {quantity}
+              </span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="px-4 py-2 font-light text-pink-800 bg-pink-200 rounded-r hover:bg-pink-300"
+                className="px-3 py-1 text-pink-800 bg-pink-200 rounded-r"
               >
                 <Plus size={20} />
               </button>
             </div>
             <button
-              onClick={() => {
-                addToCart(product, quantity);
-                onClose();
-              }}
-              className="w-full px-4 py-2 font-light text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
+              onClick={handleAddToCart}
+              className="w-full py-2 text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
             >
               Add to Cart
             </button>

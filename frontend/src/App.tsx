@@ -102,34 +102,52 @@ const App: React.FC = () => {
     setTimeout(() => setShowAlert(false), 5000);
   };
 
-  return (
-    <div className="min-h-screen bg-pink-50">
-      <NavBar cartItemsCount={cart.length} setView={setView} />
-      <div className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <Alert show={showAlert} message={alertMessage} />
-        {view === "dashboard" && !selectedProduct && (
-          <ProductGrid
-            products={products}
-            setSelectedProduct={setSelectedProduct}
-          />
-        )}
-        {view === "dashboard" && selectedProduct && (
-          <ProductDetails
-            product={selectedProduct}
-            addToCart={addToCart}
-            onClose={() => setSelectedProduct(null)}
-          />
-        )}
-        {view === "cart" && (
+  const closeAlert = () => {
+    setShowAlert(false);
+  };
+
+  const renderContent = () => {
+    switch (view) {
+      case "dashboard":
+        return (
+          <div className="relative">
+            <ProductGrid
+              products={products}
+              setSelectedProduct={setSelectedProduct}
+            />
+            {selectedProduct && (
+              <ProductDetails
+                product={selectedProduct}
+                addToCart={addToCart}
+                onClose={() => setSelectedProduct(null)}
+              />
+            )}
+          </div>
+        );
+      case "cart":
+        return (
           <Cart
             cart={cart}
             updateQuantity={updateQuantity}
             removeFromCart={removeFromCart}
             handleCheckout={handleCheckout}
           />
-        )}
-        {view === "user" && <UserDashboard />}
-        {view === "admin" && <AdminDashboard salesData={salesData} />}
+        );
+      case "user":
+        return <UserDashboard />;
+      case "admin":
+        return <AdminDashboard salesData={salesData} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-pink-50">
+      <NavBar cartItemsCount={cart.length} setView={setView} />
+      <div className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <Alert show={showAlert} message={alertMessage} onClose={closeAlert} />
+        {renderContent()}
       </div>
     </div>
   );
