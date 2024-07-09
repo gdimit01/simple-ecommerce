@@ -6,9 +6,9 @@ interface NavBarProps {
   setView: (view: string) => void;
 }
 
-export const NavBar: React.FC<NavBarProps> = ({ cartItemsCount, setView }) => (
-  <nav className="bg-pink-100 shadow-md p-4">
-    <div className="max-w-7xl mx-auto flex justify-between items-center">
+const NavBar: React.FC<NavBarProps> = ({ cartItemsCount, setView }) => (
+  <nav className="p-4 bg-pink-100 shadow-md">
+    <div className="flex items-center justify-between mx-auto max-w-7xl">
       <h1 className="text-2xl font-light text-pink-500">Ethereal Store</h1>
       <div className="flex space-x-4">
         <button
@@ -19,10 +19,9 @@ export const NavBar: React.FC<NavBarProps> = ({ cartItemsCount, setView }) => (
         </button>
         <button
           onClick={() => setView("cart")}
-          className="text-gray-600 hover:text-pink-500 flex items-center"
+          className="flex items-center text-gray-600 hover:text-pink-500"
         >
-          <ShoppingCart size={20} className="mr-1" />
-          Cart ({cartItemsCount})
+          <ShoppingCart size={20} className="mr-1" /> Cart ({cartItemsCount})
         </button>
         <button
           onClick={() => setView("user")}
@@ -40,3 +39,5 @@ export const NavBar: React.FC<NavBarProps> = ({ cartItemsCount, setView }) => (
     </div>
   </nav>
 );
+
+export default NavBar;

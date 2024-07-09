@@ -6,31 +6,31 @@ interface ProductGridProps {
   setSelectedProduct: (product: Product) => void;
 }
 
-export const ProductGrid: React.FC<ProductGridProps> = ({
+const ProductGrid: React.FC<ProductGridProps> = ({
   products,
   setSelectedProduct,
 }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
     {products.map((product) => (
       <div
         key={product.id}
-        className="bg-white rounded-lg shadow-md overflow-hidden border border-pink-200"
+        className="overflow-hidden bg-white border border-pink-200 rounded-lg shadow-md"
       >
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-48 object-cover"
+          className="object-cover w-full h-48"
         />
         <div className="p-4">
-          <h3 className="font-light text-lg mb-2">{product.name}</h3>
-          <p className="text-gray-600 mb-4 h-20 overflow-hidden">
+          <h3 className="mb-2 text-lg font-light">{product.name}</h3>
+          <p className="h-20 mb-4 overflow-hidden text-gray-600">
             {product.description}
           </p>
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <span className="text-xl font-bold">£{product.price}</span>
             <button
               onClick={() => setSelectedProduct(product)}
-              className="bg-pink-400 hover:bg-pink-500 text-white font-light py-2 px-4 rounded transition duration-300"
+              className="px-4 py-2 font-light text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
             >
               More Info
             </button>
@@ -40,3 +40,5 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     ))}
   </div>
 );
+
+export default ProductGrid;

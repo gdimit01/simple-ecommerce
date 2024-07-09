@@ -1,11 +1,11 @@
 import {
-  ArrowLeft,
   BarChart2,
   CheckCircle,
   Minus,
   Plus,
   ShoppingCart,
   User,
+  X,
 } from "lucide-react";
 import React, { useState } from "react";
 import {
@@ -18,9 +18,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import blackCapImage from "../assets/black-cap2.jpeg";
 import greyCapImage from "../assets/grey-cap.jpeg";
 import blueCapImage from "../assets/pixel art cap1.jpeg";
-import { CartItem, Product, SalesData } from "../types/index"; // Adjust the import path as necessary
+import { CartItem, Product, SalesData } from "../types/index";
 
 const products: Product[] = [
   {
@@ -43,7 +44,7 @@ const products: Product[] = [
     id: 3,
     name: "Black Cap",
     price: 20,
-    image: "/api/placeholder/300/200",
+    image: blackCapImage,
     description:
       "Sleek black cap with embroidered logo. A versatile addition to any wardrobe.",
   },
@@ -139,8 +140,8 @@ const EcommerceStore: React.FC = () => {
   };
 
   const NavBar: React.FC = () => (
-    <nav className="bg-pink-100 shadow-md p-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+    <nav className="p-4 bg-pink-100 shadow-md">
+      <div className="flex items-center justify-between mx-auto max-w-7xl">
         <h1 className="text-2xl font-light text-pink-500">Ethereal Store</h1>
         <div className="flex space-x-4">
           <button
@@ -151,7 +152,7 @@ const EcommerceStore: React.FC = () => {
           </button>
           <button
             onClick={() => setView("cart")}
-            className="text-gray-600 hover:text-pink-500 flex items-center"
+            className="flex items-center text-gray-600 hover:text-pink-500"
           >
             <ShoppingCart size={20} className="mr-1" /> Cart ({cart.length})
           </button>
@@ -173,27 +174,27 @@ const EcommerceStore: React.FC = () => {
   );
 
   const ProductGrid: React.FC = () => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
       {products.map((product) => (
         <div
           key={product.id}
-          className="bg-white rounded-lg shadow-md overflow-hidden border border-pink-200"
+          className="overflow-hidden bg-white border border-pink-200 rounded-lg shadow-md"
         >
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-48 object-cover"
+            className="object-cover w-full h-48"
           />
           <div className="p-4">
-            <h3 className="font-light text-lg mb-2">{product.name}</h3>
-            <p className="text-gray-600 mb-4 h-20 overflow-hidden">
+            <h3 className="mb-2 text-lg font-light">{product.name}</h3>
+            <p className="h-20 mb-4 overflow-hidden text-gray-600">
               {product.description}
             </p>
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <span className="text-xl font-bold">£{product.price}</span>
               <button
                 onClick={() => setSelectedProduct(product)}
-                className="bg-pink-400 hover:bg-pink-500 text-white font-light py-2 px-4 rounded transition duration-300"
+                className="px-4 py-2 font-light text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
               >
                 More Info
               </button>
@@ -205,55 +206,61 @@ const EcommerceStore: React.FC = () => {
   );
 
   const ProductDetails: React.FC = () => (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <button
-        onClick={() => setSelectedProduct(null)}
-        className="mb-4 flex items-center text-gray-600 hover:text-pink-500"
-      >
-        <ArrowLeft size={20} className="mr-2" /> Back to Dashboard
-      </button>
-      <div className="md:flex">
-        <img
-          src={selectedProduct!.image}
-          alt={selectedProduct!.name}
-          className="w-full md:w-1/2 h-64 object-cover rounded-lg mb-4 md:mb-0 md:mr-6"
-        />
-        <div>
-          <h2 className="text-2xl font-light mb-2">{selectedProduct!.name}</h2>
-          <p className="text-gray-600 mb-4">{selectedProduct!.description}</p>
-          <p className="text-xl font-bold mb-4">£{selectedProduct!.price}</p>
-          <div className="flex items-center space-x-4 mb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-xl">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => setSelectedProduct(null)}
+            className="text-gray-600 hover:text-pink-500"
+          >
+            <X size={24} />
+          </button>
+        </div>
+        <div className="flex flex-col md:flex-row">
+          <img
+            src={selectedProduct!.image}
+            alt={selectedProduct!.name}
+            className="object-cover w-full mb-4 rounded-lg md:w-1/2 md:mb-0 md:mr-6"
+          />
+          <div className="md:w-1/2">
+            <h2 className="mb-4 text-3xl font-light">
+              {selectedProduct!.name}
+            </h2>
+            <p className="mb-4 text-gray-600">{selectedProduct!.description}</p>
+            <p className="mb-6 text-2xl font-bold">£{selectedProduct!.price}</p>
+            <div className="flex items-center mb-6 space-x-4">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="px-4 py-2 font-light text-pink-800 bg-pink-200 rounded-l hover:bg-pink-300"
+              >
+                <Minus size={20} />
+              </button>
+              <span className="text-xl">{quantity}</span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="px-4 py-2 font-light text-pink-800 bg-pink-200 rounded-r hover:bg-pink-300"
+              >
+                <Plus size={20} />
+              </button>
+            </div>
             <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="bg-pink-200 hover:bg-pink-300 text-pink-800 font-light py-2 px-4 rounded-l"
+              onClick={() => {
+                addToCart(selectedProduct!, quantity);
+                setSelectedProduct(null);
+              }}
+              className="w-full px-4 py-2 font-light text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
             >
-              <Minus size={20} />
-            </button>
-            <span className="text-xl">{quantity}</span>
-            <button
-              onClick={() => setQuantity(quantity + 1)}
-              className="bg-pink-200 hover:bg-pink-300 text-pink-800 font-light py-2 px-4 rounded-r"
-            >
-              <Plus size={20} />
+              Add to Cart
             </button>
           </div>
-          <button
-            onClick={() => {
-              addToCart(selectedProduct!, quantity);
-              setSelectedProduct(null);
-            }}
-            className="bg-pink-400 hover:bg-pink-500 text-white font-light py-2 px-4 rounded transition duration-300"
-          >
-            Add to Cart
-          </button>
         </div>
       </div>
     </div>
   );
 
   const Cart: React.FC = () => (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-light text-pink-500 mb-4">Your Cart</h2>
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <h2 className="mb-4 text-2xl font-light text-pink-500">Your Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -261,13 +268,13 @@ const EcommerceStore: React.FC = () => {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex justify-between items-center mb-4 border-b pb-4"
+              className="flex items-center justify-between pb-4 mb-4 border-b"
             >
               <div className="flex items-center">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-16 h-16 object-cover rounded mr-4"
+                  className="object-cover w-16 h-16 mr-4 rounded"
                 />
                 <div>
                   <h3 className="font-light">{item.name}</h3>
@@ -279,20 +286,20 @@ const EcommerceStore: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  className="bg-pink-200 hover:bg-pink-300 text-pink-800 p-1 rounded"
+                  className="p-1 text-pink-800 bg-pink-200 rounded hover:bg-pink-300"
                 >
                   <Minus size={16} />
                 </button>
                 <span>{item.quantity}</span>
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                  className="bg-pink-200 hover:bg-pink-300 text-pink-800 p-1 rounded"
+                  className="p-1 text-pink-800 bg-pink-200 rounded hover:bg-pink-300"
                 >
                   <Plus size={16} />
                 </button>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="bg-red-400 hover:bg-red-500 text-white p-1 rounded"
+                  className="p-1 text-white bg-red-400 rounded hover:bg-red-500"
                 >
                   Remove
                 </button>
@@ -304,7 +311,7 @@ const EcommerceStore: React.FC = () => {
           </div>
           <button
             onClick={handleCheckout}
-            className="mt-4 bg-pink-400 hover:bg-pink-500 text-white font-light py-2 px-4 rounded transition duration-300"
+            className="px-4 py-2 mt-4 font-light text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
           >
             Proceed to Checkout
           </button>
@@ -314,19 +321,19 @@ const EcommerceStore: React.FC = () => {
   );
 
   const UserDashboard: React.FC = () => (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-light text-pink-500 mb-4">User Dashboard</h2>
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <h2 className="mb-4 text-2xl font-light text-pink-500">User Dashboard</h2>
       <p>Welcome, User! This is your personal dashboard.</p>
     </div>
   );
 
   const AdminDashboard: React.FC = () => (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-light text-pink-500 mb-4">
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <h2 className="mb-4 text-2xl font-light text-pink-500">
         Admin Dashboard
       </h2>
       <div className="mb-6">
-        <h3 className="text-xl font-light mb-2">Sales Overview</h3>
+        <h3 className="mb-2 text-xl font-light">Sales Overview</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={salesData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -343,15 +350,15 @@ const EcommerceStore: React.FC = () => {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-pink-100 p-4 rounded-lg">
-          <h4 className="font-light mb-2">Total Sales</h4>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="p-4 bg-pink-100 rounded-lg">
+          <h4 className="mb-2 font-light">Total Sales</h4>
           <p className="text-2xl font-bold">
             £{salesData.reduce((sum, data) => sum + data.sales, 0).toFixed(2)}
           </p>
         </div>
-        <div className="bg-blue-100 p-4 rounded-lg">
-          <h4 className="font-light mb-2">Products Sold</h4>
+        <div className="p-4 bg-blue-100 rounded-lg">
+          <h4 className="mb-2 font-light">Products Sold</h4>
           <p className="text-2xl font-bold">
             {Math.floor(
               salesData.reduce((sum, data) => sum + data.sales, 0) / 20
@@ -365,18 +372,18 @@ const EcommerceStore: React.FC = () => {
   return (
     <div className="min-h-screen bg-pink-50">
       <NavBar />
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {showAlert && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-            <div className="p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div className="fixed inset-0 flex items-center justify-center w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
+            <div className="p-5 bg-white border rounded-md shadow-lg w-96">
               <div className="text-center">
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                <div className="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
                 </div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900 mt-2">
+                <h3 className="mt-2 text-lg font-medium leading-6 text-gray-900">
                   Success
                 </h3>
-                <div className="mt-2 px-7 py-3">
+                <div className="py-3 mt-2 px-7">
                   <p className="text-sm text-gray-500">{alertMessage}</p>
                 </div>
               </div>
