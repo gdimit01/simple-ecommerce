@@ -1,5 +1,5 @@
-import { CheckCircle, X } from "lucide-react";
-import React from "react";
+import { Check } from "lucide-react";
+import React, { useEffect } from "react";
 
 interface AlertProps {
   show: boolean;
@@ -8,27 +8,39 @@ interface AlertProps {
 }
 
 const Alert: React.FC<AlertProps> = ({ show, message, onClose }) => {
+  // Always render the component for debugging
   if (!show) return null;
+
+  // Log when the component renders or updates
+  useEffect(() => {
+    console.log("Alert rendered. Show:", show, "Message:", message);
+  }, [show, message]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
-      <div className="relative p-5 bg-white border rounded-md shadow-lg w-96">
-        <button
-          onClick={onClose}
-          className="absolute text-gray-500 top-2 right-2 hover:text-gray-700"
-        >
-          <X size={20} />
-        </button>
-        <div className="text-center">
-          <div className="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
-            <CheckCircle className="w-6 h-6 text-green-600" />
-          </div>
-          <h3 className="mt-2 text-lg font-medium leading-6 text-gray-900">
-            Success
-          </h3>
-          <div className="py-3 mt-2 px-7">
-            <p className="text-sm text-gray-500">{message}</p>
-          </div>
+      <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg">
+        {/* Green success bar with check icon */}
+        <div className="flex items-center justify-center p-4 bg-green-500">
+          <Check className="w-8 h-8 text-white" />
+        </div>
+
+        {/* Alert content */}
+        <div className="p-4 text-center">
+          <h2 className="mb-2 text-xl font-bold">Great!</h2>
+          <p className="mb-4 text-gray-600">{message}</p>
+        </div>
+
+        {/* Close button */}
+        <div className="flex justify-center px-4 pb-4">
+          <button
+            onClick={() => {
+              console.log("Close button clicked");
+              onClose();
+            }}
+            className="px-12 py-2 text-white transition duration-200 bg-red-500 rounded hover:bg-red-600"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
