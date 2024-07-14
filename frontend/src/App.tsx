@@ -7,6 +7,7 @@ import ProductDetails from "./components/ProductDetails";
 import ProductGrid from "./components/ProductGrid";
 import UserDashboard from "./components/UserDashboard";
 import { products } from "./data/products";
+import purchases from "./data/purchases";
 import { CartItem, Product, SalesData } from "./types";
 
 const App: React.FC = () => {
@@ -134,7 +135,7 @@ const App: React.FC = () => {
           />
         );
       case "user":
-        return <UserDashboard />;
+        return <UserDashboard purchases={purchases} />; // Pass the purchases array as a prop
       case "admin":
         return <AdminDashboard salesData={salesData} />;
       default:

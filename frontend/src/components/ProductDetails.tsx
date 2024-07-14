@@ -1,5 +1,3 @@
-// src/components/ProductDetails.tsx
-
 import { Minus, Plus, X } from "lucide-react";
 import React, { useState } from "react";
 import { Product } from "../types";

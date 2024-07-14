@@ -25,7 +25,6 @@ const ProductPage: React.FC = () => {
       const timer = setTimeout(() => {
         setShowAlert(false);
       }, 3000); // Close after 3 seconds
-
       return () => clearTimeout(timer);
     }
   }, [showAlert]);

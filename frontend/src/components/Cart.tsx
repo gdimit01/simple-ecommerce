@@ -1,7 +1,8 @@
 import { Minus, Plus } from "lucide-react";
 import React from "react";
-import { CartItem } from "../types";
+import { CartItem } from "../types"; // Ensure this import path is correct
 
+// Define the props for the Cart component
 interface CartProps {
   cart: CartItem[];
   updateQuantity: (productId: number, newQuantity: number) => void;
@@ -9,16 +10,43 @@ interface CartProps {
   handleCheckout: () => void;
 }
 
+// Define the Cart component
 const Cart: React.FC<CartProps> = ({
   cart,
   updateQuantity,
   removeFromCart,
   handleCheckout,
 }) => {
+  // Calculate the total price of items in the cart
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
+  // Proceed to checkout function
+  const proceedToCheckout = async () => {
+    const purchases = cart.map((item) => ({
+      productId: item.id,
+      quantity: item.quantity,
+      date: new Date().toISOString(),
+      name: item.name,
+      price: item.price,
+    }));
+
+    const response = await fetch("http://localhost:3000/api/purchases/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ purchases }),
+    });
+
+    if (response.ok) {
+      handleCheckout(); // Call the handleCheckout prop after successful purchase
+    } else {
+      console.error("Failed to proceed to checkout");
+    }
+  };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
@@ -47,7 +75,12 @@ const Cart: React.FC<CartProps> = ({
               </div>
               <div className="flex items-center space-x-2">
                 <button
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  onClick={() =>
+                    updateQuantity(
+                      item.id,
+                      item.quantity > 1 ? item.quantity - 1 : 1
+                    )
+                  }
                   className="p-1 text-pink-800 bg-pink-200 rounded hover:bg-pink-300"
                 >
                   <Minus size={16} />
@@ -72,7 +105,7 @@ const Cart: React.FC<CartProps> = ({
             Total: £{totalPrice.toFixed(2)}
           </div>
           <button
-            onClick={handleCheckout}
+            onClick={proceedToCheckout}
             className="px-4 py-2 mt-4 font-light text-white transition duration-300 bg-pink-400 rounded hover:bg-pink-500"
           >
             Proceed to Checkout

@@ -1,5 +1,30 @@
 # React + TypeScript + Vite
 
+cd frontend
+yarn dev
+yarn build
+
+cd backend
+yarn dev
+yarn build
+
+server.ts runs on localhost:3000
+
+# TO DO
+
+- [x] Add ESLint rules for React and TypeScript
+- [ ] Correct the purchases and userdashboard so that you have a list of purchased items as opposed to overwritting it on the same one
+- [ ] Add Prettier config
+- [ ] Add Jest for testing
+- [ ] Add Cypress for end-to-end testing
+- [ ] Add Tailwind CSS for styling
+- [ ] Add React Router for navigation
+- [ ] Add Redux for state management
+- [ ] Add MongoDB for database integration
+- [ ] Add authentication and authorization functionality
+- [ ] Add Docker for containerization
+- [ ] Add CI/CD pipeline for deployment
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
@@ -17,12 +42,12 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
