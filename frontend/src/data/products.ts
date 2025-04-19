@@ -12,7 +12,8 @@ export const products: Product[] = [
   {
     id: 1,
     name: "Blue Cap",
-    price: 20,
+    price: 24.99,
+    category: "Headwear",
     image: blueCapImage,
     description:
       "A stylish blue cap perfect for sunny days. Made with breathable material for maximum comfort.",
@@ -20,7 +21,8 @@ export const products: Product[] = [
   {
     id: 2,
     name: "Grey Cap",
-    price: 20,
+    price: 22.99,
+    category: "Headwear",
     image: greyCapImage,
     description:
       "Classic grey cap with adjustable strap. Suitable for casual wear or sports activities.",
@@ -28,31 +30,35 @@ export const products: Product[] = [
   {
     id: 3,
     name: "Black Cap",
-    price: 20,
+    price: 23.99,
+    category: "Headwear",
     image: blackCapImage,
     description:
       "Sleek black cap with embroidered logo. A versatile addition to any wardrobe.",
   },
   {
     id: 4,
-    name: "Oyster watch",
-    price: 20,
+    name: "Oyster Watch",
+    price: 299.99,
+    category: "Watches",
     image: oysterWatchImage,
-    description: "Sleek Oyster watch.",
+    description: "Elegant Oyster watch with premium stainless steel construction and water resistance up to 100m.",
   },
   {
     id: 5,
     name: "Classic Cyberdeck",
-    price: 20,
+    price: 499.99,
+    category: "Electronics",
     image: cyberDeckImage,
     description:
-      "Sleek black cap with embroidered logo. A versatile addition to any wardrobe.",
+      "High-performance portable computing platform with mechanical keyboard and customizable modules.",
   },
   {
     id: 6,
     name: "Gold Watch",
-    price: 20,
+    price: 449.99,
+    category: "Watches",
     image: goldWatchImage,
-    description: "Sleek gold watch.",
+    description: "Luxurious gold-plated watch with premium Swiss movement and sapphire crystal.",
   },
 ];

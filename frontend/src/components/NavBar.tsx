@@ -1,9 +1,11 @@
 import { BarChart2, ShoppingCart, User } from "lucide-react";
 import React from "react";
 
+type ViewType = "dashboard" | "cart" | "user" | "admin";
+
 interface NavBarProps {
   cartItemsCount: number;
-  setView: (view: string) => void;
+  setView: (view: ViewType) => void;
 }
 
 const NavBar: React.FC<NavBarProps> = ({ cartItemsCount, setView }) => (

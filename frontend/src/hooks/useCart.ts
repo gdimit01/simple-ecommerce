@@ -1,20 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CartItem, Product } from "../types";
 
-export const useCart = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+interface UseCartReturn {
+  cart: CartItem[];
+  addToCart: (product: Product, qty: number) => void;
+  removeFromCart: (productId: number) => void;
+  updateQuantity: (productId: number, newQuantity: number) => void;
+  clearCart: () => void;
+  totalItems: number;
+  totalPrice: number;
+}
 
-  const addToCart = (product: Product, quantity: number) => {
+const CART_STORAGE_KEY = 'ethereal-store-cart';
+
+export const useCart = (): UseCartReturn => {
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  }, [cart]);
+
+  const addToCart = (product: Product, qty: number) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
         return prevCart.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...item, quantity: item.quantity + qty }
             : item
         );
       }
-      return [...prevCart, { ...product, quantity }];
+      return [...prevCart, { ...product, quantity: qty }];
     });
   };
 
@@ -38,8 +57,9 @@ export const useCart = () => {
     setCart([]);
   };
 
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.price * item.quantity, 
     0
   );
 
@@ -49,6 +69,7 @@ export const useCart = () => {
     removeFromCart,
     updateQuantity,
     clearCart,
-    totalPrice,
+    totalItems,
+    totalPrice
   };
 };
